@@ -11,6 +11,7 @@ class IslamiApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(430, 932),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Islami',
         theme: AppTheme.lightMode,
         home: const OnBoardingView(),
