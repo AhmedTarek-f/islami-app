@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami_app/core/constants/app_theme.dart';
 import 'package:islami_app/features/on_boarding/presentation/views/on_boarding_view.dart';
 
 class IslamiApp extends StatelessWidget {
@@ -8,10 +9,7 @@ class IslamiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Islami',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightMode,
       home: const OnBoardingView(),
     );
   }
