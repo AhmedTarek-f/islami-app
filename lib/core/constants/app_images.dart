@@ -9,6 +9,7 @@ abstract final class AppImages{
   static const String onBoarding4 = "assets/images/on_boarding_4.png";
   static const String onBoarding5 = "assets/images/on_boarding_5.png";
   static const String quranScreenBackground = "assets/images/quran_screen_background.png";
+  static const String hadithScreenBackground = "assets/images/hadith_screen_background.png";
   static const String radioActiveBackground = "assets/images/radio_active_background.png";
   static const String radioInactiveBackground = "assets/images/radio_inactive_background.png";
   static const String radioScreenBackground = "assets/images/radio_screen_background.png";
