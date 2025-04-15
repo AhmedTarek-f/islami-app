@@ -1,47 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:islami_app/core/constants/app_images.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:islami_app/core/constants/app_data/app_data.dart';
+import 'package:islami_app/features/navigation_menu/presentation/views/navigation_menu_view.dart';
+import 'package:islami_app/features/navigation_menu/presentation/views_model/menu_bottom_navigation_cubit.dart';
 import 'package:islami_app/features/on_boarding/data/models/on_boarding_model.dart';
+import 'package:islami_app/features/on_boarding/presentation/views/on_boarding_view.dart';
 import 'package:islami_app/features/on_boarding/presentation/views_model/on_boarding_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingCubit extends Cubit<OnBoardingState> {
   OnBoardingCubit() : super(OnBoardingInitial()){
     onInit();
   }
-  late final PageController onBoardingPageController;
+  late PageController onBoardingPageController;
   late OnBoardingModel currentOnBoarding;
+  late final SharedPreferences prefs;
+  bool? isFirstTime;
   int currentPageIndex = 0;
-  final List<OnBoardingModel> onBoardingList = const [
-    OnBoardingModel(
-      image: AppImages.onBoarding1,
-      title: "Welcome To Islmi App",
-    ),
-    OnBoardingModel(
-        image: AppImages.onBoarding2,
-        title: "Welcome To Islami",
-        subTitle: "We Are Very Excited To Have You In Our Community"
-    ),
-    OnBoardingModel(
-        image: AppImages.onBoarding3,
-        title: "Reading the Quran",
-        subTitle: "Read, and your Lord is the Most Generous"
-    ),
-    OnBoardingModel(
-        image: AppImages.onBoarding4,
-        title: "Bearish",
-        subTitle: "Praise the name of your Lord, the Most High"
-    ),
-    OnBoardingModel(
-        image: AppImages.onBoarding5,
-        title: "Holy Quran Radio",
-        subTitle: "You can listen to the Holy Quran Radio through the application for free and easily"
-    ),
-  ];
 
 
-  void onInit(){
+  Future<void> onInit() async{
+    await checkUserLoggedInBefore();
     onBoardingPageController = PageController();
-    currentOnBoarding = onBoardingList[currentPageIndex];
+    currentOnBoarding = AppData.onBoardingList[currentPageIndex];
   }
 
   void getCurrentIndex(int index){
@@ -49,9 +31,38 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     emit(ChangingOnBoardingScreenState());
   }
 
+  Future<void> checkUserLoggedInBefore() async {
+    prefs  = await SharedPreferences.getInstance();
+    isFirstTime = prefs.getBool("isFirstTime");
+    FlutterNativeSplash.remove();
+  }
+
+  void finishButton({required BuildContext context}){
+    prefs.setBool("isFirstTime", false);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider<MenuBottomNavigationCubit>(
+            create: (context) => MenuBottomNavigationCubit(),
+            child: const NavigationMenuView()
+        ),
+      ),
+    );
+  }
+
+  Widget screenRedirect() {
+    if(isFirstTime != null){
+      return BlocProvider<MenuBottomNavigationCubit>(
+          create:(context) => MenuBottomNavigationCubit(),
+          child: const NavigationMenuView()
+      );
+    }
+    else{
+      return const OnBoardingView();
+    }
+  }
+
   void moveToSelectedPage({required int index}){
     onBoardingPageController.jumpToPage(index);
-    currentPageIndex = index;
     emit(ChangingOnBoardingScreenState());
   }
   void moveToNextPage(){
