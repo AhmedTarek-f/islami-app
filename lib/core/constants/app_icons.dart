@@ -5,6 +5,7 @@ abstract final class AppIcons {
   static const pauseIcon = "assets/icons/pause_icon.svg";
   static const playIcon = "assets/icons/play_icon.svg";
   static const quranActiveIcon = "assets/icons/quran_active_icon.svg";
+  static const quranInactiveIcon = "assets/icons/quran_inactive_icon.svg";
   static const radioActiveIcon = "assets/icons/radio_active_icon.svg";
   static const radioInactiveIcon = "assets/icons/radio_inactive_icon.svg";
   static const searchBookIcon = "assets/icons/search_book_icon.svg";
