@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:islami_app/core/constants/app_data/app_data.dart';
 import 'package:islami_app/features/quran/presentation/views/widgets/recent_sura_item.dart';
 import 'package:islami_app/features/quran/presentation/views_model/quran_cubit.dart';
 
@@ -15,9 +16,9 @@ class RecentSurasList extends StatelessWidget {
       child: ListView.separated(
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
-          itemBuilder: (_, index) => RecentSuraItem(suraData: controller.surasList[index]),
+          itemBuilder: (_, index) => RecentSuraItem(suraData: AppData.surasList[index]),
           separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-          itemCount: controller.surasList.length
+          itemCount: AppData.surasList.length
       ),
     );
   }
