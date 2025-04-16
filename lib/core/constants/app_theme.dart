@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islami_app/core/constants/app_colors.dart';
 import 'package:islami_app/core/constants/app_fonts.dart';
 
-abstract final class AppTheme{
+abstract final class AppTheme {
   static ThemeData lightMode = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.black,
@@ -15,6 +15,6 @@ abstract final class AppTheme{
       elevation: 0,
       showUnselectedLabels: false,
       selectedLabelStyle: AppFonts.fontSize12Bold,
-    )
+    ),
   );
 }
