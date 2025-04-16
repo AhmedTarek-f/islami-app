@@ -12,37 +12,49 @@ class MenuBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = BlocProvider.of<MenuBottomNavigationCubit>(context);
-    return BlocBuilder<MenuBottomNavigationCubit,MenuBottomNavigationState>(
-      builder: (context, state) =>  BottomNavigationBar(
-        currentIndex: controller.tapIndex,
-        onTap: (value) => controller.changeIndex(value),
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.quranInactiveIcon),
-            activeIcon: const ActiveIcon(icon: AppIcons.quranActiveIcon,),
-            label: "Quran",
-          ),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(AppIcons.hadithInactiveIcon),
-              activeIcon: const ActiveIcon(icon: AppIcons.hadithActiveIcon,),
-              label: "Hadith"
-          ),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(AppIcons.sebhaInactiveIcon),
-              activeIcon: const ActiveIcon(icon: AppIcons.sebhaActiveIcon,),
-              label: "Sebha"
-          ),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(AppIcons.radioInactiveIcon),
-              activeIcon: const ActiveIcon(icon: AppIcons.radioActiveIcon,),
-              label: "Radio"
-          ),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(AppIcons.timeInactiveIcon),
-              activeIcon: const ActiveIcon(icon: AppIcons.timeActiveIcon,),
-              label: "Time"
-          ),
-        ],
+    return BlocBuilder<MenuBottomNavigationCubit, MenuBottomNavigationState>(
+      builder: (context, state) => Theme(
+        data: Theme.of(context).copyWith(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
+        child: BottomNavigationBar(
+          currentIndex: controller.tapIndex,
+          onTap: (value) => controller.changeIndex(value),
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(AppIcons.quranInactiveIcon),
+              activeIcon: const ActiveIcon(
+                icon: AppIcons.quranActiveIcon,
+              ),
+              label: "Quran",
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(AppIcons.hadithInactiveIcon),
+                activeIcon: const ActiveIcon(
+                  icon: AppIcons.hadithActiveIcon,
+                ),
+                label: "Hadith"),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(AppIcons.sebhaInactiveIcon),
+                activeIcon: const ActiveIcon(
+                  icon: AppIcons.sebhaActiveIcon,
+                ),
+                label: "Sebha"),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(AppIcons.radioInactiveIcon),
+                activeIcon: const ActiveIcon(
+                  icon: AppIcons.radioActiveIcon,
+                ),
+                label: "Radio"),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(AppIcons.timeInactiveIcon),
+                activeIcon: const ActiveIcon(
+                  icon: AppIcons.timeActiveIcon,
+                ),
+                label: "Time"),
+          ],
+        ),
       ),
     );
   }
