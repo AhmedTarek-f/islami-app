@@ -1,4 +1,5 @@
 import 'package:islami_app/core/constants/app_images.dart';
+import 'package:islami_app/features/hadith/data/models/hadith_model.dart';
 import 'package:islami_app/features/on_boarding/data/models/on_boarding_model.dart';
 import 'package:islami_app/features/quran/data/models/sura_model.dart';
 
@@ -146,4 +147,58 @@ abstract final class AppData {
     SuraModel(suraNumber: "113", suraNameEn: "Al-Falaq", suraNameAr: "الفلق", versesNumber: "5"),
     SuraModel(suraNumber: "114", suraNameEn: "Al-Nas", suraNameAr: "الناس", versesNumber: "6"),
   ];
+
+ static List<HadithModel> hadithList =  [
+   HadithModel(hadithNameAr: "الحديث الأول", hadithNameEn: "Hadith 1"),
+   HadithModel(hadithNameAr: "الحديث الثاني", hadithNameEn: "Hadith 2"),
+   HadithModel(hadithNameAr: "الحديث الثالث", hadithNameEn: "Hadith 3"),
+   HadithModel(hadithNameAr: "الحديث الرابع", hadithNameEn: "Hadith 4"),
+   HadithModel(hadithNameAr: "الحديث الخامس", hadithNameEn: "Hadith 5"),
+   HadithModel(hadithNameAr: "الحديث السادس", hadithNameEn: "Hadith 6"),
+   HadithModel(hadithNameAr: "الحديث السابع", hadithNameEn: "Hadith 7"),
+   HadithModel(hadithNameAr: "الحديث الثامن", hadithNameEn: "Hadith 8"),
+   HadithModel(hadithNameAr: "الحديث التاسع", hadithNameEn: "Hadith 9"),
+   HadithModel(hadithNameAr: "الحديث العاشر", hadithNameEn: "Hadith 10"),
+   HadithModel(hadithNameAr: "الحديث الحادي عشر", hadithNameEn: "Hadith 11"),
+   HadithModel(hadithNameAr: "الحديث الثاني عشر", hadithNameEn: "Hadith 12"),
+   HadithModel(hadithNameAr: "الحديث الثالث عشر", hadithNameEn: "Hadith 13"),
+   HadithModel(hadithNameAr: "الحديث الرابع عشر", hadithNameEn: "Hadith 14"),
+   HadithModel(hadithNameAr: "الحديث الخامس عشر", hadithNameEn: "Hadith 15"),
+   HadithModel(hadithNameAr: "الحديث السادس عشر", hadithNameEn: "Hadith 16"),
+   HadithModel(hadithNameAr: "الحديث السابع عشر", hadithNameEn: "Hadith 17"),
+   HadithModel(hadithNameAr: "الحديث الثامن عشر", hadithNameEn: "Hadith 18"),
+   HadithModel(hadithNameAr: "الحديث التاسع عشر", hadithNameEn: "Hadith 19"),
+   HadithModel(hadithNameAr: "الحديث العشرون", hadithNameEn: "Hadith 20"),
+   HadithModel(hadithNameAr: "الحديث الحادي والعشرون", hadithNameEn: "Hadith 21"),
+   HadithModel(hadithNameAr: "الحديث الثاني والعشرون", hadithNameEn: "Hadith 22"),
+   HadithModel(hadithNameAr: "الحديث الثالث والعشرون", hadithNameEn: "Hadith 23"),
+   HadithModel(hadithNameAr: "الحديث الرابع والعشرون", hadithNameEn: "Hadith 24"),
+   HadithModel(hadithNameAr: "الحديث الخامس والعشرون", hadithNameEn: "Hadith 25"),
+   HadithModel(hadithNameAr: "الحديث السادس والعشرون", hadithNameEn: "Hadith 26"),
+   HadithModel(hadithNameAr: "الحديث السابع والعشرون", hadithNameEn: "Hadith 27"),
+   HadithModel(hadithNameAr: "الحديث الثامن والعشرون", hadithNameEn: "Hadith 28"),
+   HadithModel(hadithNameAr: "الحديث التاسع والعشرون", hadithNameEn: "Hadith 29"),
+   HadithModel(hadithNameAr: "الحديث الثلاثون", hadithNameEn: "Hadith 30"),
+   HadithModel(hadithNameAr: "الحديث الحادي والثلاثون", hadithNameEn: "Hadith 31"),
+   HadithModel(hadithNameAr: "الحديث الثاني والثلاثون", hadithNameEn: "Hadith 32"),
+   HadithModel(hadithNameAr: "الحديث الثالث والثلاثون", hadithNameEn: "Hadith 33"),
+   HadithModel(hadithNameAr: "الحديث الرابع والثلاثون", hadithNameEn: "Hadith 34"),
+   HadithModel(hadithNameAr: "الحديث الخامس والثلاثون", hadithNameEn: "Hadith 35"),
+   HadithModel(hadithNameAr: "الحديث السادس والثلاثون", hadithNameEn: "Hadith 36"),
+   HadithModel(hadithNameAr: "الحديث السابع والثلاثون", hadithNameEn: "Hadith 37"),
+   HadithModel(hadithNameAr: "الحديث الثامن والثلاثون", hadithNameEn: "Hadith 38"),
+   HadithModel(hadithNameAr: "الحديث التاسع والثلاثون", hadithNameEn: "Hadith 39"),
+   HadithModel(hadithNameAr: "الحديث الأربعون", hadithNameEn: "Hadith 40"),
+   HadithModel(hadithNameAr: "الحديث الحادي والأربعون", hadithNameEn: "Hadith 41"),
+   HadithModel(hadithNameAr: "الحديث الثاني والأربعون", hadithNameEn: "Hadith 42"),
+   HadithModel(hadithNameAr: "الحديث الثالث والأربعون", hadithNameEn: "Hadith 43"),
+   HadithModel(hadithNameAr: "الحديث الرابع والأربعون", hadithNameEn: "Hadith 44"),
+   HadithModel(hadithNameAr: "الحديث الخامس والأربعون", hadithNameEn: "Hadith 45"),
+   HadithModel(hadithNameAr: "الحديث السادس والأربعون", hadithNameEn: "Hadith 46"),
+   HadithModel(hadithNameAr: "الحديث السابع والأربعون", hadithNameEn: "Hadith 47"),
+   HadithModel(hadithNameAr: "الحديث الثامن والأربعون", hadithNameEn: "Hadith 48"),
+   HadithModel(hadithNameAr: "الحديث التاسع والأربعون", hadithNameEn: "Hadith 49"),
+   HadithModel(hadithNameAr: "الحديث الخمسون", hadithNameEn: "Hadith 50"),
+ ];
+
 }
