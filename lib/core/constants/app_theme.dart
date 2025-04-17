@@ -16,5 +16,10 @@ abstract final class AppTheme {
       showUnselectedLabels: false,
       selectedLabelStyle: AppFonts.fontSize12Bold,
     ),
+    textSelectionTheme: TextSelectionThemeData(
+      selectionColor: AppColors.offWhite,
+      selectionHandleColor: AppColors.primary.withValues(alpha: 0.8),
+      cursorColor: AppColors.primary.withValues(alpha: 0.8),
+    )
   );
 }
