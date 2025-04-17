@@ -1,22 +1,17 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:islami_app/core/constants/app_data/app_data.dart';
+import 'package:islami_app/features/quran/data/models/sura_model.dart';
 import 'package:islami_app/features/quran/presentation/views_model/quran_state.dart';
 
 class QuranCubit extends Cubit<QuranState> {
   QuranCubit() : super(QuranInitial());
-  bool isLoading = false;
-  Future<String> loadSuraData({required int suraNumber}) async{
-    try{
-      isLoading = true;
-      emit(LoadSuraLoadingState());
-      final String suraData = await rootBundle.loadString("lib/core/constants/app_data/suras_data/$suraNumber.txt");
-      isLoading = false;
-      emit(LoadSuraSuccessState());
-      return suraData;
+  List<SuraModel> surasSearchList = [];
+  void suraSearch({required String suraName}){
+    surasSearchList.clear();
+    if(suraName.isNotEmpty && suraName.trim() != ""){
+      final List<SuraModel> matchedList = AppData.surasList.where((sura) => sura.suraNameAr.contains(suraName) || sura.suraNameEn.toLowerCase().contains(suraName) ,).toList();
+      surasSearchList.addAll(matchedList);
     }
-    catch(e){
-      emit(LoadSuraFailureState(failureMessage: "An error hass ocurred while loading sura: ${e.toString()}"));
-      return "";
-    }
+    emit(SuraSearchState());
   }
 }
