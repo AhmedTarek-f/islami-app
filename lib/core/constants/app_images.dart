@@ -19,6 +19,10 @@ abstract final class AppImages{
   static const String suraDetailsScreenFooterImage = "assets/images/sura_details_screen_footer_image.png";
   static const String suraNumberImg = "assets/images/sura_number_img.png";
   static const String timeScreenBackground = "assets/images/time_screen_background.png";
+  static const String hadithCardBackgroundImage = "assets/images/hadith_card_background_image.png";
+  static const String hadithScreenFooterImage = "assets/images/hadith_screen_footer_image.png";
+  static const String sebhaUpperPart = "assets/images/sebha_upper_part.png";
+  static const String sebhaBody = "assets/images/sebha_body.png";
 
   // logos
   static const String islamiMosqueLogo = "assets/logos/islami_mosque_logo.png";
