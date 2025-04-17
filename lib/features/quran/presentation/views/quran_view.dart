@@ -11,7 +11,7 @@ class QuranView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width,
+      width: ScreenUtil().screenWidth,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       decoration: const BoxDecoration(
         image: DecorationImage(
