@@ -11,13 +11,18 @@ class HadithCubit extends Cubit<HadithState> {
 
   bool isLoading = false;
   String hadithData = "";
-  late final CarouselController carouselController;
-
+  late final PageController pageController;
+  int currentIndex = 0;
   void onInit(){
-    carouselController = CarouselController(
-        initialItem: 1
+    pageController = PageController(
+      viewportFraction: 0.75,
     );
     loadHadithData();
+  }
+
+  void getCurrentPageIndex({required int index}){
+    currentIndex = index;
+    emit(ChangeHadithPageIndexState());
   }
 
   Future<void> loadHadithData() async{
@@ -43,7 +48,7 @@ class HadithCubit extends Cubit<HadithState> {
 
   @override
   Future<void> close() {
-    carouselController.dispose();
+    pageController.dispose();
     return super.close();
   }
 }
