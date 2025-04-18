@@ -9,3 +9,4 @@ final class LoadHadithFailureState extends HadithState {
   const LoadHadithFailureState({required this.failureMessage});
   final String failureMessage;
 }
+final class ChangeHadithPageIndexState extends HadithState {}
