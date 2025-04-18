@@ -47,6 +47,8 @@ class HadithContent extends StatelessWidget {
                 style: AppFonts.fontSize16Bold.copyWith(color: AppColors.black,height: 1.85.h),
                 textAlign: TextAlign.center,
                 textDirection: TextDirection.rtl,
+                maxLines: 15,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
