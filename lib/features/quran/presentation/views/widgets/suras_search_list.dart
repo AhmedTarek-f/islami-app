@@ -12,13 +12,11 @@ class SurasSearchList extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = BlocProvider.of<QuranCubit>(context);
     return BlocBuilder<QuranCubit,QuranState>(
-      builder:(context, state) => Expanded(
-        child: ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (_, index) => SuraItem(suraData: controller.surasSearchList[index]),
-            separatorBuilder: (context, index) => const SuraDivider(),
-            itemCount: controller.surasSearchList.length
-        ),
+      builder:(context, state) => ListView.separated(
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (_, index) => SuraItem(suraData: controller.surasSearchList[index]),
+          separatorBuilder: (context, index) => const SuraDivider(),
+          itemCount: controller.surasSearchList.length
       ),
     );
   }
