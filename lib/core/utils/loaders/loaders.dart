@@ -4,7 +4,7 @@ import 'package:islami_app/core/constants/app_colors.dart';
 import 'package:islami_app/core/constants/app_fonts.dart';
 
 abstract class Loaders {
-  static customSnackBar ({required title,  required String message, required BuildContext context, int secondsDuration = 3, Color? loaderBackgroundColor, IconData? icon, Color? iconColor,})
+  static customSnackBar ({required title,  required String message, required BuildContext context, int secondsDuration = 2, Color? loaderBackgroundColor, IconData? icon, Color? iconColor,})
   {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
