@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app/core/constants/app_colors.dart';
 import 'package:islami_app/core/constants/app_images.dart';
 import 'package:islami_app/features/radio/presentation/views/widgets/radio_view_body.dart';
+import 'package:islami_app/features/radio/presentation/views_model/radio_cubit.dart';
 
 class RadioView extends StatelessWidget {
   const RadioView({super.key});
@@ -9,7 +12,7 @@ class RadioView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width,
+      width: ScreenUtil().screenWidth,
       decoration: const BoxDecoration(
           color: AppColors.black,
           image: DecorationImage(
@@ -19,7 +22,12 @@ class RadioView extends StatelessWidget {
               fit: BoxFit.cover
           )
       ),
-      child: const RadioViewBody(),
+      child: BlocProvider<RadioCubit>(
+        create: (context) => RadioCubit(),
+        child: const SafeArea(
+          child: RadioViewBody(),
+        ),
+      ),
     );
   }
 }
