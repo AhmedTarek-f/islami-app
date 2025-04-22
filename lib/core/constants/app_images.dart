@@ -26,4 +26,7 @@ abstract final class AppImages{
 
   // logos
   static const String islamiMosqueLogo = "assets/logos/islami_mosque_logo.png";
+
+  // animation
+  static const String emptyAnimation = "assets/animations/empty_animation.json";
 }
