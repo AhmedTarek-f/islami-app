@@ -14,7 +14,6 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   }
   late PageController onBoardingPageController;
   late OnBoardingModel currentOnBoarding;
-  late bool isFirstTime;
   int currentPageIndex = 0;
 
   void onInit() {
