@@ -30,7 +30,7 @@ class HadithCubit extends Cubit<HadithState> {
       isLoading = true;
       emit(LoadHadithLoadingState());
       for(int i =0 ; i<50 ; i++){
-        String hadithDataSeparated = await rootBundle.loadString("assets/hadith_data/h${(i+1).toString()}.txt");
+        String hadithDataSeparated = await rootBundle.loadString("assets/files/hadith_data/h${(i+1).toString()}.txt");
         List<String> hadithLines = hadithDataSeparated.split("\n");
         for(int j =0 ; j<hadithLines.length ; j++){
           hadithData += hadithLines[j].trim();
