@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app/core/common_widgets/loading_indicator.dart';
 import 'package:islami_app/core/constants/app_fonts.dart';
 import 'package:islami_app/core/constants/app_images.dart';
-import 'package:islami_app/core/utils/loaders.dart';
+import 'package:islami_app/core/utils/loaders/loaders.dart';
 import 'package:islami_app/features/quran/data/models/sura_model.dart';
 import 'package:islami_app/features/quran_details/presentation/views/widgets/sura_name_and_borders.dart';
 import 'package:islami_app/features/quran_details/presentation/views_model/quran_details_cubit.dart';
