@@ -27,7 +27,7 @@ class SebhaContent extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 8.h,
+                        top: 14.h,
                         right: 0,
                         left: 0,
                         child: Image.asset(
@@ -39,6 +39,8 @@ class SebhaContent extends StatelessWidget {
                       ),
                       Positioned(
                         top: 86.h,
+                        right: 0,
+                        left:0,
                         child: GestureDetector(
                           onTap: () {
                             sebhaController.changeSebhaContent();
@@ -49,7 +51,7 @@ class SebhaContent extends StatelessWidget {
                                   angle: sebhaController.angle,
                                   child: Image.asset(
                                     AppImages.sebhaBody,
-                                    width: 379.w,
+                                    width: ScreenUtil().screenWidth,
                                     height: 381.h,
                                     fit: BoxFit.cover,
                                   ),
