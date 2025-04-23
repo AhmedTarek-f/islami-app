@@ -8,15 +8,15 @@ class SharedPreferencesHelper {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static removeData({required String key}) async {
+  static Future<void> removeData({required String key}) async {
     await sharedPreferences.remove(key);
   }
 
-  static clearAllData() async {
+  static Future<void> clearAllData() async {
     await sharedPreferences.clear();
   }
 
-  static saveData({required String key, required dynamic value}) async {
+  static Future<void> saveData({required String key, required dynamic value}) async {
     debugPrint("SharedPrefHelper : setData with key : $key and value : $value");
 
     if (value is String) {
@@ -27,27 +27,38 @@ class SharedPreferencesHelper {
       await sharedPreferences.setBool(key, value);
     } else if (value is double) {
       await sharedPreferences.setDouble(key, value);
-    } else {
-      return null;
     }
   }
-
-  static getBool({required String key}) {
-    debugPrint('SharedPrefHelper : getBool with key : $key');
-    return sharedPreferences.getBool(key) ?? false;
+  static Future<void> saveBool({required String key, required bool value})async {
+    await sharedPreferences.setBool(key, value);
   }
 
-  static getDouble({required String key}) {
+  static Future<void> saveStringList({required String key, required List<String> value}) async {
+    debugPrint("SharedPrefHelper : setData with key : $key and value : $value");
+    await sharedPreferences.setStringList(key, value);
+  }
+
+  static List<String> getStringList({required String key}) {
+    debugPrint('SharedPrefHelper : getStringList with key : $key');
+    return sharedPreferences.getStringList(key) ?? [];
+  }
+
+  static bool? getBool({required String key}) {
+    debugPrint('SharedPrefHelper : getBool with key : $key');
+    return sharedPreferences.getBool(key);
+  }
+
+  static double getDouble({required String key}) {
     debugPrint('SharedPrefHelper : getDouble with key : $key');
     return sharedPreferences.getDouble(key) ?? 0.0;
   }
 
-  static getInt({required String key}) {
+  static int getInt({required String key}) {
     debugPrint('SharedPrefHelper : getInt with key : $key');
     return sharedPreferences.getInt(key) ?? 0;
   }
 
-  static getString({required String key}) {
+  static String getString({required String key}) {
     debugPrint('SharedPrefHelper : getString with key : $key');
     return sharedPreferences.getString(key) ?? '';
   }
