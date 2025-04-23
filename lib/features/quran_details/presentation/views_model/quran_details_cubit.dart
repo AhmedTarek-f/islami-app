@@ -18,7 +18,7 @@ class QuranDetailsCubit extends Cubit<QuranDetailsState> {
     try{
       isLoading = true;
       emit(LoadSuraLoadingState());
-      final String suraDataSeparated = await rootBundle.loadString("assets/suras_data/$suraNumber.txt");
+      final String suraDataSeparated = await rootBundle.loadString("assets/files/suras_data/$suraNumber.txt");
       List<String> suraLines = suraDataSeparated.split("\n");
       for(int i =0 ; i<suraLines.length ; i++){
         suraData += suraLines[i].trim();
