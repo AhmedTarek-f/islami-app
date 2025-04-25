@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app/core/constants/app_images.dart';
 import 'package:islami_app/features/time/presentation/views/widgets/time_view_body.dart';
+import 'package:islami_app/features/time/presentation/views_model/time_cubit.dart';
 
 class TimeView extends StatelessWidget {
   const TimeView({super.key});
@@ -8,14 +11,19 @@ class TimeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width,
+      width: ScreenUtil().screenWidth,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(AppImages.timeScreenBackground),
+          image: AssetImage(AppImages.timeScreenBackground),
           fit: BoxFit.cover,
         ),
       ),
-      child: const TimeViewBody(),
+      child: BlocProvider<TimeCubit>(
+        create: (context) => TimeCubit(),
+        child: const SafeArea(
+          child: TimeViewBody(),
+        ),
+      ),
     );
   }
 }
