@@ -1,5 +1,4 @@
 abstract final class AppIcons {
-
   static const hadithActiveIcon = "assets/icons/hadith_active_icon.svg";
   static const hadithInactiveIcon = "assets/icons/hadith_inactive_icon.svg";
   static const pauseIcon = "assets/icons/pause_icon.svg";
@@ -15,5 +14,5 @@ abstract final class AppIcons {
   static const soundOnIcon = "assets/icons/sound_on_icon.svg";
   static const timeActiveIcon = "assets/icons/time_active_icon.svg";
   static const timeInactiveIcon = "assets/icons/time_inactive_icon.svg";
-
+  static const timeSoundOff = "assets/icons/time_sound_off.svg";
 }
