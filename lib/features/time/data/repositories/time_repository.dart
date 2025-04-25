@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:islami_app/features/azkar/data/models/azkar_model/azkar_model.dart';
 import 'package:islami_app/features/time/data/data_sources/remote_data_source/time_remote_data.dart';
-import 'package:islami_app/features/time/data/models/azkar_model/azkar_model.dart';
 import 'package:islami_app/features/time/data/models/time_model/time_model.dart';
 
 abstract class TimeRepository {

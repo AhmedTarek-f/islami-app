@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:islami_app/features/time/data/models/azkar_model/azkar_model.dart';
+import 'package:islami_app/features/azkar/data/models/azkar_model/azkar_model.dart';
 import 'package:islami_app/features/time/data/models/pray_time_model/pray_time_model.dart';
 import 'package:islami_app/features/time/data/models/time_model/time_model.dart';
 import 'package:islami_app/features/time/data/repositories/time_repository.dart';
