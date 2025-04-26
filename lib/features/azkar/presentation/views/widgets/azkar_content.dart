@@ -47,6 +47,32 @@ class AzkarContent extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Visibility(
+                      visible: azkarData.description.isNotEmpty,
+                      child: RPadding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Text(
+                          "الوصف: ${azkarData.description}",
+                          style: AppFonts.fontSize16Bold
+                              .copyWith(color: AppColors.black, height: 1.85.h),
+                          textAlign: TextAlign.justify,
+                          textDirection: TextDirection.rtl,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: azkarData.reference.isNotEmpty,
+                      child: RPadding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Text(
+                          "المصدر: ${azkarData.reference}",
+                          style: AppFonts.fontSize16Bold
+                              .copyWith(color: AppColors.black, height: 1.85.h),
+                          textAlign: TextAlign.justify,
+                          textDirection: TextDirection.rtl,
+                        ),
+                      ),
+                    ),
                     Text(
                       azkarData.content,
                       style: AppFonts.fontSize16Bold
