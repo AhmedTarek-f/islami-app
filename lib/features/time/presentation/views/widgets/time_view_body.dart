@@ -38,6 +38,7 @@ class TimeViewBody extends StatelessWidget {
                   title: "Oh snap!",
                   message: state.errorMessage,
                   context: context,
+                  loaderBackgroundColor: AppColors.red,
                 );
               }
             },
@@ -69,6 +70,7 @@ class TimeViewBody extends StatelessWidget {
                   title: "Oh Snap!",
                   message: state.errorMessage,
                   context: context,
+                  loaderBackgroundColor: AppColors.red,
                 );
               }
             },

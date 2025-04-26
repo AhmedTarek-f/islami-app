@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app/core/common_widgets/loading_indicator.dart';
+import 'package:islami_app/core/constants/app_colors.dart';
 import 'package:islami_app/core/constants/app_fonts.dart';
 import 'package:islami_app/core/constants/app_images.dart';
 import 'package:islami_app/core/utils/loaders/loaders.dart';
@@ -24,25 +25,33 @@ class QuranDetailsViewBody extends StatelessWidget {
             child: Column(
               children: [
                 SuraNameAndBorders(suraNameArabic: suraData.suraNameAr),
-                BlocConsumer<QuranDetailsCubit,QuranDetailsState>(
-                  buildWhen: (previous, current) => current is LoadSuraSuccessState,
+                BlocConsumer<QuranDetailsCubit, QuranDetailsState>(
+                  buildWhen: (previous, current) =>
+                      current is LoadSuraSuccessState,
                   listener: (context, state) {
-                    if(state is LoadSuraFailureState){
-                      Loaders.customSnackBar(title: "Sura Loading Error.", context: context, message: state.failureMessage, secondsDuration: 2);
+                    if (state is LoadSuraFailureState) {
+                      Loaders.customSnackBar(
+                        title: "Sura Loading Error.",
+                        context: context,
+                        message: state.failureMessage,
+                        secondsDuration: 2,
+                        loaderBackgroundColor: AppColors.red,
+                      );
                     }
                   },
                   builder: (context, state) => Expanded(
-                    child: controller.isLoading?
-                     const LoadingIndicator()
-                    :SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Text(
-                        controller.suraData,
-                        style: AppFonts.fontSize20Bold.copyWith(height: 2),
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    child: controller.isLoading
+                        ? const LoadingIndicator()
+                        : SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Text(
+                              controller.suraData,
+                              style:
+                                  AppFonts.fontSize20Bold.copyWith(height: 2),
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                   ),
                 ),
               ],
@@ -50,7 +59,7 @@ class QuranDetailsViewBody extends StatelessWidget {
           ),
         ),
         Image.asset(
-            AppImages.suraDetailsScreenFooterImage,
+          AppImages.suraDetailsScreenFooterImage,
           width: ScreenUtil().screenWidth,
           height: 112.h,
           fit: BoxFit.cover,
