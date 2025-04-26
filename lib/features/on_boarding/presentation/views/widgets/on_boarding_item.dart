@@ -18,18 +18,23 @@ class OnBoardingItem extends StatelessWidget {
             height: 415.h,
             fit: BoxFit.cover,
           ),
-          SizedBox(height: 39.75.h,),
+          SizedBox(
+            height: 39.75.h,
+          ),
           Text(
             onBoardingData.title,
             style: AppFonts.fontSize24Bold,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 41.25.h,),
-          if(onBoardingData.subTitle != null) Text(
-            onBoardingData.subTitle!,
-            style: AppFonts.fontSize20Bold,
-            textAlign: TextAlign.center,
+          SizedBox(
+            height: 41.25.h,
           ),
+          if (onBoardingData.subTitle != null)
+            Text(
+              onBoardingData.subTitle!,
+              style: AppFonts.fontSize20Bold,
+              textAlign: TextAlign.center,
+            ),
         ],
       ),
     );

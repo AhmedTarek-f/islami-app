@@ -14,12 +14,12 @@ class QuranViewBody extends StatelessWidget {
     final controller = BlocProvider.of<QuranCubit>(context);
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        const QuranSliverAppBar()
+        const QuranSliverAppBar(),
       ],
-      body: BlocBuilder<QuranCubit,QuranState>(
-        builder: (context, state) => controller.surasSearchList.isNotEmpty?
-        const SurasSearchList() :
-        const SurasList(),
+      body: BlocBuilder<QuranCubit, QuranState>(
+        builder: (context, state) => controller.surasSearchList.isNotEmpty
+            ? const SurasSearchList()
+            : const SurasList(),
       ),
     );
   }

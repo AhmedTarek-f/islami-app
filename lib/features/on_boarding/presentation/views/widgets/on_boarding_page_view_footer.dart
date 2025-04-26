@@ -16,46 +16,48 @@ class OnBoardingPageViewFooter extends StatelessWidget {
     final controller = BlocProvider.of<OnBoardingCubit>(context);
     return RPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: BlocBuilder<OnBoardingCubit,OnBoardingState>(
+      child: BlocBuilder<OnBoardingCubit, OnBoardingState>(
         builder: (context, state) => Row(
           children: [
-            controller.currentPageIndex != 0.0? GestureDetector(
-              onTap: (){
-                controller.moveToPreviousPage();
-              },
-              child: const Text(
-                "Back",
-                style: AppFonts.fontSize16Bold,
-              ),
-            ):
-            SizedBox(width: 40.w,),
+            controller.currentPageIndex != 0.0
+                ? GestureDetector(
+                    onTap: () {
+                      controller.moveToPreviousPage();
+                    },
+                    child: const Text(
+                      "Back",
+                      style: AppFonts.fontSize16Bold,
+                    ),
+                  )
+                : SizedBox(
+                    width: 40.w,
+                  ),
             Expanded(
               child: Center(
                 child: SmoothPageIndicator(
                   controller: controller.onBoardingPageController,
-                  count:  AppData.onBoardingList.length,
-                  effect:  WormEffect(
+                  count: AppData.onBoardingList.length,
+                  effect: WormEffect(
                       dotHeight: 7.r,
-                      dotWidth:  18.w,
+                      dotWidth: 18.w,
                       activeDotColor: AppColors.primary,
                       radius: 27.r,
                       dotColor: AppColors.gray,
-                      spacing: 11.w
-                  ),
-                  onDotClicked: (index){
+                      spacing: 11.w),
+                  onDotClicked: (index) {
                     controller.moveToSelectedPage(index: index);
                   },
                 ),
               ),
             ),
             GestureDetector(
-              onTap: (){
-                controller.currentPageIndex == 4?
-                controller.finishButton(context: context)
-                : controller.moveToNextPage();
+              onTap: () async {
+                controller.currentPageIndex == 4
+                    ? await controller.finishButton(context: context)
+                    : controller.moveToNextPage();
               },
               child: Text(
-                controller.currentPageIndex == 4? "Finish" : "Next",
+                controller.currentPageIndex == 4 ? "Finish" : "Next",
                 style: AppFonts.fontSize16Bold,
               ),
             )

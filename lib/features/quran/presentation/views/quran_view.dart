@@ -15,16 +15,16 @@ class QuranView extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(
-                AppImages.quranScreenBackground,
-            ),
-          fit: BoxFit.cover
-        )
+          image: AssetImage(
+            AppImages.quranScreenBackground,
+          ),
+          fit: BoxFit.cover,
+        ),
       ),
       child: BlocProvider<QuranCubit>(
         create: (context) => QuranCubit(),
         child: const SafeArea(
-            child: QuranViewBody()
+          child: QuranViewBody(),
         ),
       ),
     );
