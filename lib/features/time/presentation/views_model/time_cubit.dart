@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:islami_app/features/azkar/data/models/azkar_model/azkar_model.dart';
@@ -15,7 +17,7 @@ class TimeCubit extends Cubit<TimeState> {
   late final PageController prayTimePageController;
   List<AzkarModel> morningAzkar = [];
   List<AzkarModel> eveningAzkar = [];
-  String nextPrayTime = "";
+  Duration? nextPrayTime;
   late int currentPrayTimePageIndex;
   bool isAlAdanLoading = true;
   bool isAzkarLoading = true;
@@ -31,9 +33,10 @@ class TimeCubit extends Cubit<TimeState> {
         alAdanTimes = await TimeRepository.getAlAdanTimes();
         TimeRepository.cachedAdanData = alAdanTimes;
         prayTimeList = assignPrayTimeList();
-        currentPrayTimePageIndex = getCurrentPrayIndex();
+        currentPrayTimePageIndex = getCurrentPrayerIndex();
         nextPrayTime =
             getNextPrayTime(currentPrayTimeIndex: currentPrayTimePageIndex);
+        startUpdatingGetNextPrayTime();
         prayTimePageController = PageController(
           viewportFraction: 0.35,
           initialPage: currentPrayTimePageIndex,
@@ -44,9 +47,10 @@ class TimeCubit extends Cubit<TimeState> {
         isAlAdanLoading = false;
         alAdanTimes = TimeRepository.cachedAdanData;
         prayTimeList = assignPrayTimeList();
-        currentPrayTimePageIndex = getCurrentPrayIndex();
+        currentPrayTimePageIndex = getCurrentPrayerIndex();
         nextPrayTime =
             getNextPrayTime(currentPrayTimeIndex: currentPrayTimePageIndex);
+        startUpdatingGetNextPrayTime();
         prayTimePageController = PageController(
           viewportFraction: 0.35,
           initialPage: currentPrayTimePageIndex,
@@ -130,128 +134,145 @@ class TimeCubit extends Cubit<TimeState> {
     }
   }
 
-  int getCurrentPrayIndex() {
-    final int fajrTimeLeft =
-        getAbsTimeHour(prayerTime: alAdanTimes!.timings!.fajr!);
-    final int sunriseTimeLeft =
-        getAbsTimeHour(prayerTime: alAdanTimes!.timings!.sunrise!);
-    final int dhuhrTimeLeft =
-        getAbsTimeHour(prayerTime: alAdanTimes!.timings!.dhuhr!);
-    final int asrTimeLeft =
-        getAbsTimeHour(prayerTime: alAdanTimes!.timings!.asr!);
-    final int maghribTimeLeft =
-        getAbsTimeHour(prayerTime: alAdanTimes!.timings!.maghrib!);
-    final int ishaTimeLeft =
-        getAbsTimeHour(prayerTime: alAdanTimes!.timings!.isha!);
-    if (fajrTimeLeft < sunriseTimeLeft &&
-        fajrTimeLeft < dhuhrTimeLeft &&
-        fajrTimeLeft < asrTimeLeft &&
-        fajrTimeLeft < maghribTimeLeft &&
-        fajrTimeLeft < ishaTimeLeft &&
-        fajrTimeLeft >= getTimeHour(prayerTime: alAdanTimes!.timings!.fajr!)) {
-      return 0;
-    } else if (sunriseTimeLeft < fajrTimeLeft &&
-        sunriseTimeLeft < dhuhrTimeLeft &&
-        sunriseTimeLeft < asrTimeLeft &&
-        sunriseTimeLeft < maghribTimeLeft &&
-        sunriseTimeLeft < ishaTimeLeft &&
-        sunriseTimeLeft >=
-            getTimeHour(prayerTime: alAdanTimes!.timings!.sunrise!)) {
-      return 1;
-    } else if (dhuhrTimeLeft < fajrTimeLeft &&
-        dhuhrTimeLeft < sunriseTimeLeft &&
-        dhuhrTimeLeft < asrTimeLeft &&
-        dhuhrTimeLeft < maghribTimeLeft &&
-        dhuhrTimeLeft < ishaTimeLeft &&
-        dhuhrTimeLeft >=
-            getTimeHour(prayerTime: alAdanTimes!.timings!.dhuhr!)) {
-      return 2;
-    } else if (asrTimeLeft < fajrTimeLeft &&
-        asrTimeLeft < sunriseTimeLeft &&
-        asrTimeLeft < dhuhrTimeLeft &&
-        asrTimeLeft < maghribTimeLeft &&
-        asrTimeLeft < ishaTimeLeft &&
-        asrTimeLeft >= getTimeHour(prayerTime: alAdanTimes!.timings!.asr!)) {
-      return 3;
-    } else if (maghribTimeLeft < fajrTimeLeft &&
-        maghribTimeLeft < sunriseTimeLeft &&
-        maghribTimeLeft < dhuhrTimeLeft &&
-        maghribTimeLeft < asrTimeLeft &&
-        maghribTimeLeft < ishaTimeLeft &&
-        asrTimeLeft < ishaTimeLeft &&
-        maghribTimeLeft >=
-            getTimeHour(prayerTime: alAdanTimes!.timings!.maghrib!)) {
-      return 4;
-    } else {
+  int getCurrentPrayerIndex() {
+    final now = DateTime.now();
+
+    final prayers = [
+      alAdanTimes!.timings!.fajr!,
+      alAdanTimes!.timings!.sunrise!,
+      alAdanTimes!.timings!.dhuhr!,
+      alAdanTimes!.timings!.asr!,
+      alAdanTimes!.timings!.maghrib!,
+      alAdanTimes!.timings!.isha!,
+    ];
+
+    final List<DateTime> prayerTimes = prayers.map((time) {
+      final hour = int.parse(time.substring(0, 2));
+      final minute = int.parse(time.substring(3, 5));
+      var prayerDateTime = DateTime(now.year, now.month, now.day, hour, minute);
+
+      return prayerDateTime;
+    }).toList();
+
+    final ishaTime = prayerTimes[5];
+
+    if (now.isAfter(ishaTime) || now.isBefore(prayerTimes[0])) {
       return 5;
     }
+
+    for (int i = 0; i < prayerTimes.length - 1; i++) {
+      final start = prayerTimes[i];
+      final end = prayerTimes[i + 1];
+
+      if (now.isAfter(start) && now.isBefore(end)) {
+        return i;
+      }
+    }
+
+    return 0;
   }
 
-  String getNextPrayTime({required int currentPrayTimeIndex}) {
-    int currentHours = DateTime.now().hour >= 12
-        ? DateTime.now().hour - 12
-        : DateTime.now().hour;
-    int currentMinutes = DateTime.now().minute;
-
+  Duration getNextPrayTime({required int currentPrayTimeIndex}) {
     if (currentPrayTimeIndex == 0) {
       int sunriseHours = int.parse(prayTimeList[1].prayerTime.substring(0, 2));
       int sunriseMinutes =
           int.parse(prayTimeList[1].prayerTime.substring(3, 5));
-      int sunriseHoursLeft = (currentHours - sunriseHours).abs();
-      int sunriseMinutesLeft = (currentMinutes - sunriseMinutes).abs();
-      return sunriseHoursLeft == 0
-          ? "$sunriseMinutesLeft minutes"
-          : "$sunriseHoursLeft hours";
+      return getTimeLeft(
+        now: DateTime.now(),
+        targetHour: sunriseHours,
+        targetMinute: sunriseMinutes,
+      );
     } else if (currentPrayTimeIndex == 1) {
       int dhuhrHours = int.parse(prayTimeList[2].prayerTime.substring(0, 2));
       int dhuhrMinutes = int.parse(prayTimeList[2].prayerTime.substring(3, 5));
-      int dhuhrHoursLeft = (currentHours - dhuhrHours).abs();
-      int dhuhrMinutesLeft = (currentMinutes - dhuhrMinutes).abs();
-      return dhuhrHoursLeft == 0
-          ? "$dhuhrMinutesLeft minutes"
-          : "$dhuhrHoursLeft hours";
+      return getTimeLeft(
+        now: DateTime.now(),
+        targetHour: dhuhrHours,
+        targetMinute: dhuhrMinutes,
+      );
     } else if (currentPrayTimeIndex == 2) {
       int asrHours = int.parse(prayTimeList[3].prayerTime.substring(0, 2));
       int asrMinutes = int.parse(prayTimeList[3].prayerTime.substring(3, 5));
-      int asrHoursLeft = (currentHours - asrHours).abs();
-      int asrMinutesLeft = (currentMinutes - asrMinutes).abs();
-      return asrHoursLeft == 0
-          ? "$asrMinutesLeft minutes"
-          : "$asrHoursLeft hours";
+      return getTimeLeft(
+        now: DateTime.now(),
+        targetHour: asrHours,
+        targetMinute: asrMinutes,
+      );
     } else if (currentPrayTimeIndex == 3) {
       int maghribHours = int.parse(prayTimeList[4].prayerTime.substring(0, 2));
       int maghribMinutes =
           int.parse(prayTimeList[4].prayerTime.substring(3, 5));
-      int maghribHoursLeft = (currentHours - maghribHours).abs();
-      int maghribMinutesLeft = (currentMinutes - maghribMinutes).abs();
-      return maghribHoursLeft == 0
-          ? "$maghribMinutesLeft minutes"
-          : "$maghribHoursLeft hours";
+      return getTimeLeft(
+        now: DateTime.now(),
+        targetHour: maghribHours,
+        targetMinute: maghribMinutes,
+      );
     } else if (currentPrayTimeIndex == 4) {
       int ishaHours = int.parse(prayTimeList[5].prayerTime.substring(0, 2));
       int ishaMinutes = int.parse(prayTimeList[5].prayerTime.substring(3, 5));
-      int ishaHoursLeft = (currentHours - ishaHours).abs();
-      int ishaMinutesLeft = (currentMinutes - ishaMinutes).abs();
-      return ishaHoursLeft == 0
-          ? "$ishaMinutesLeft minutes"
-          : "$ishaHoursLeft hours";
+      return getTimeLeft(
+        now: DateTime.now(),
+        targetHour: ishaHours,
+        targetMinute: ishaMinutes,
+      );
     } else {
       int fajrHours = int.parse(prayTimeList[0].prayerTime.substring(0, 2));
       int fajrMinutes = int.parse(prayTimeList[0].prayerTime.substring(3, 5));
-      int fajrHoursLeft = (currentHours - fajrHours).abs();
-      int fajrMinutesLeft = (currentMinutes - fajrMinutes).abs();
-      return fajrHoursLeft == 0
-          ? "$fajrMinutesLeft minutes"
-          : "$fajrHoursLeft hours";
+      return getTimeLeft(
+        now: DateTime.now(),
+        targetHour: fajrHours,
+        targetMinute: fajrMinutes,
+      );
     }
   }
 
-  int getAbsTimeHour({required String prayerTime}) {
-    return (DateTime.now().hour - int.parse(prayerTime.substring(0, 2))).abs();
+  int getLeftTimeHour({
+    required String prayerTime,
+  }) {
+    final int targetHour = int.parse(prayerTime.substring(0, 2));
+    final int targetMinute = int.parse(prayerTime.substring(3, 5));
+    final now = DateTime.now();
+    DateTime target = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      targetHour,
+      targetMinute,
+    );
+
+    if (target.isBefore(now)) {
+      target = target.add(const Duration(days: 1));
+    }
+
+    return target.difference(now).inHours;
   }
 
-  int getTimeHour({required String prayerTime}) {
-    return DateTime.now().hour - int.parse(prayerTime.substring(0, 2));
+  Duration getTimeLeft({
+    required DateTime now,
+    required int targetHour,
+    required int targetMinute,
+  }) {
+    DateTime target = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      targetHour,
+      targetMinute,
+    );
+
+    if (target.isBefore(now)) {
+      target = target.add(const Duration(days: 1));
+    }
+
+    return target.difference(now);
+  }
+
+  void startUpdatingGetNextPrayTime() {
+    Timer.periodic(const Duration(minutes: 1), (timer) {
+      nextPrayTime =
+          getNextPrayTime(currentPrayTimeIndex: currentPrayTimePageIndex);
+      emit(ChangeNextPrayTimeState());
+    });
   }
 
   @override
