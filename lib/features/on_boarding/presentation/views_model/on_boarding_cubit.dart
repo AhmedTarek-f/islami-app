@@ -26,18 +26,21 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     emit(ChangingOnBoardingScreenState());
   }
 
-  void finishButton({required BuildContext context}) {
-    SharedPreferencesHelper.saveData(
+  Future<void> finishButton({required BuildContext context}) async {
+    await SharedPreferencesHelper.saveBool(
       key: AppConstants.isHomeScreenKey,
       value: true,
     );
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => BlocProvider<MenuBottomNavigationCubit>(
+    if (context.mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => BlocProvider<MenuBottomNavigationCubit>(
             create: (context) => MenuBottomNavigationCubit(),
-            child: const NavigationMenuView()),
-      ),
-    );
+            child: const NavigationMenuView(),
+          ),
+        ),
+      );
+    }
   }
 
   void moveToSelectedPage({required int index}) {
