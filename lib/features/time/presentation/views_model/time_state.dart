@@ -23,3 +23,5 @@ final class LoadAzkarFailureState extends TimeState {
   const LoadAzkarFailureState({required this.errorMessage});
   final String errorMessage;
 }
+
+final class ChangeNextPrayTimeState extends TimeState {}
