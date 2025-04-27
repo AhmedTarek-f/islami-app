@@ -21,6 +21,7 @@ class TimeCubit extends Cubit<TimeState> {
   late int currentPrayTimePageIndex;
   bool isAlAdanLoading = true;
   bool isAzkarLoading = true;
+  late final List<String> prayers;
   void onInit() {
     fetchAlAdanTimes();
     getSpecificAzkar();
@@ -33,6 +34,14 @@ class TimeCubit extends Cubit<TimeState> {
         alAdanTimes = await TimeRepository.getAlAdanTimes();
         TimeRepository.cachedAdanData = alAdanTimes;
         prayTimeList = assignPrayTimeList();
+        prayers = [
+          alAdanTimes!.timings!.fajr!,
+          alAdanTimes!.timings!.sunrise!,
+          alAdanTimes!.timings!.dhuhr!,
+          alAdanTimes!.timings!.asr!,
+          alAdanTimes!.timings!.maghrib!,
+          alAdanTimes!.timings!.isha!,
+        ];
         currentPrayTimePageIndex = getCurrentPrayerIndex();
         nextPrayTime =
             getNextPrayTime(currentPrayTimeIndex: currentPrayTimePageIndex);
@@ -47,6 +56,14 @@ class TimeCubit extends Cubit<TimeState> {
         isAlAdanLoading = false;
         alAdanTimes = TimeRepository.cachedAdanData;
         prayTimeList = assignPrayTimeList();
+        prayers = [
+          alAdanTimes!.timings!.fajr!,
+          alAdanTimes!.timings!.sunrise!,
+          alAdanTimes!.timings!.dhuhr!,
+          alAdanTimes!.timings!.asr!,
+          alAdanTimes!.timings!.maghrib!,
+          alAdanTimes!.timings!.isha!,
+        ];
         currentPrayTimePageIndex = getCurrentPrayerIndex();
         nextPrayTime =
             getNextPrayTime(currentPrayTimeIndex: currentPrayTimePageIndex);
@@ -137,15 +154,6 @@ class TimeCubit extends Cubit<TimeState> {
   int getCurrentPrayerIndex() {
     final now = DateTime.now();
 
-    final prayers = [
-      alAdanTimes!.timings!.fajr!,
-      alAdanTimes!.timings!.sunrise!,
-      alAdanTimes!.timings!.dhuhr!,
-      alAdanTimes!.timings!.asr!,
-      alAdanTimes!.timings!.maghrib!,
-      alAdanTimes!.timings!.isha!,
-    ];
-
     final List<DateTime> prayerTimes = prayers.map((time) {
       final hour = int.parse(time.substring(0, 2));
       final minute = int.parse(time.substring(3, 5));
@@ -174,42 +182,40 @@ class TimeCubit extends Cubit<TimeState> {
 
   Duration getNextPrayTime({required int currentPrayTimeIndex}) {
     if (currentPrayTimeIndex == 0) {
-      int sunriseHours = int.parse(prayTimeList[1].prayerTime.substring(0, 2));
-      int sunriseMinutes =
-          int.parse(prayTimeList[1].prayerTime.substring(3, 5));
+      int sunriseHours = int.parse(prayers[1].substring(0, 2));
+      int sunriseMinutes = int.parse(prayers[1].substring(3, 5));
       return getTimeLeft(
         now: DateTime.now(),
         targetHour: sunriseHours,
         targetMinute: sunriseMinutes,
       );
     } else if (currentPrayTimeIndex == 1) {
-      int dhuhrHours = int.parse(prayTimeList[2].prayerTime.substring(0, 2));
-      int dhuhrMinutes = int.parse(prayTimeList[2].prayerTime.substring(3, 5));
+      int dhuhrHours = int.parse(prayers[2].substring(0, 2));
+      int dhuhrMinutes = int.parse(prayers[2].substring(3, 5));
       return getTimeLeft(
         now: DateTime.now(),
         targetHour: dhuhrHours,
         targetMinute: dhuhrMinutes,
       );
     } else if (currentPrayTimeIndex == 2) {
-      int asrHours = int.parse(prayTimeList[3].prayerTime.substring(0, 2));
-      int asrMinutes = int.parse(prayTimeList[3].prayerTime.substring(3, 5));
+      int asrHours = int.parse(prayers[3].substring(0, 2));
+      int asrMinutes = int.parse(prayers[3].substring(3, 5));
       return getTimeLeft(
         now: DateTime.now(),
         targetHour: asrHours,
         targetMinute: asrMinutes,
       );
     } else if (currentPrayTimeIndex == 3) {
-      int maghribHours = int.parse(prayTimeList[4].prayerTime.substring(0, 2));
-      int maghribMinutes =
-          int.parse(prayTimeList[4].prayerTime.substring(3, 5));
+      int maghribHours = int.parse(prayers[4].substring(0, 2));
+      int maghribMinutes = int.parse(prayers[4].substring(3, 5));
       return getTimeLeft(
         now: DateTime.now(),
         targetHour: maghribHours,
         targetMinute: maghribMinutes,
       );
     } else if (currentPrayTimeIndex == 4) {
-      int ishaHours = int.parse(prayTimeList[5].prayerTime.substring(0, 2));
-      int ishaMinutes = int.parse(prayTimeList[5].prayerTime.substring(3, 5));
+      int ishaHours = int.parse(prayers[5].substring(0, 2));
+      int ishaMinutes = int.parse(prayers[5].substring(3, 5));
       return getTimeLeft(
         now: DateTime.now(),
         targetHour: ishaHours,
