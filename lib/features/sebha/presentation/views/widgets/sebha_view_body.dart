@@ -9,19 +9,31 @@ class SebhaViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return Column(
-      children: [
-        const IslamiLogo(),
-        SizedBox(height: 16.h,),
-        const Text(
-            "سَبِّحِ اسْمَ رَبِّكَ الأعلى ",
-          textDirection: TextDirection.rtl,
-          textAlign: TextAlign.center,
-          style: AppFonts.fontSize36Bold,
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              const IslamiLogo(),
+              SizedBox(
+                height: 16.h,
+              ),
+              const Text(
+                "سَبِّحِ اسْمَ رَبِّكَ الأعلى ",
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
+                style: AppFonts.fontSize36Bold,
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+            ],
+          ),
         ),
-        SizedBox(height: 16.h,),
-        const SebhaContent()
+        const SliverFillRemaining(
+          hasScrollBody: true,
+          child: SebhaContent(),
+        )
       ],
     );
   }
