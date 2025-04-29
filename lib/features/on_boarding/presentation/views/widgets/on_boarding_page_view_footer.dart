@@ -37,9 +37,9 @@ class OnBoardingPageViewFooter extends StatelessWidget {
                 child: SmoothPageIndicator(
                   controller: controller.onBoardingPageController,
                   count: AppData.onBoardingList.length,
-                  effect: WormEffect(
+                  effect: ExpandingDotsEffect(
                       dotHeight: 7.r,
-                      dotWidth: 18.w,
+                      dotWidth: 7.r,
                       activeDotColor: AppColors.primary,
                       radius: 27.r,
                       dotColor: AppColors.gray,
